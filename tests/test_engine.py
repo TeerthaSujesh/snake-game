@@ -13,7 +13,7 @@ def test_eating_food_grows_snake():
     state = new_game(20, 40)
     row, col = state.snake[0]
     dr, dc = state.direction
-    state = replace(state, food=(row + dr, col + dc))
+    state = replace(state, momo=(row + dr, col + dc))
 
     new_state = move(state)
 
@@ -33,7 +33,7 @@ def test_score_increases_on_eat():
     state = new_game(20, 40)
     row, col = state.snake[0]
     dr, dc = state.direction
-    state = replace(state, food=(row + dr, col + dc))
+    state = replace(state, momo=(row + dr, col + dc))
 
     new_state = move(state)
 

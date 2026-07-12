@@ -2,7 +2,7 @@ import curses
 import time
 
 from engine import GameState, change_direction, move, new_game
-from renderer import draw, draw_game_over
+from renderer import draw, draw_game_over, init_colors
 
 KEY_DIRS = {
     curses.KEY_UP: (-1, 0),
@@ -26,10 +26,11 @@ def main(stdscr):
     curses.curs_set(0)
     stdscr.nodelay(True)
     stdscr.timeout(100)
+    init_colors()
 
     max_y, max_x = stdscr.getmaxyx()
-    height = min(20, max_y - 2)
-    width = min(40, max_x - 1)
+    height = min(20, max_y - 3)
+    width = min(40, max_x - 3)
     state = new_game(height=height, width=width)
     while state.alive:
         key = stdscr.getch()

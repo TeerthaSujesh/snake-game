@@ -6,7 +6,7 @@ from dataclasses import dataclass, replace
 class GameState:
     snake: list[tuple[int, int]]   # list of (row, col), head is index 0
     direction: tuple[int, int]     # (row_delta, col_delta)
-    food: tuple[int, int]
+    momo: tuple[int, int]
     score: int
     alive: bool
     height: int
@@ -20,17 +20,17 @@ def new_game(height: int, width: int) -> GameState:
     state = GameState(
         snake=snake,
         direction=(0, 1),
-        food=(0, 0),
+        momo=(0, 0),
         score=0,
         alive=True,
         height=height,
         width=width,
     )
-    return replace(state, food=spawn_food(state))
+    return replace(state, momo=spawn_food(state))
 
 
 def did_eat(state: GameState) -> bool:
-    return state.snake[0] == state.food
+    return state.snake[0] == state.momo
 
 
 def is_collision(state: GameState) -> bool:
@@ -75,6 +75,6 @@ def move(state: GameState) -> GameState:
         return replace(candidate, alive=False)
 
     if ate:
-        candidate = replace(candidate, food=spawn_food(candidate))
+        candidate = replace(candidate, momo=spawn_food(candidate))
 
     return candidate
