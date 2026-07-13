@@ -11,6 +11,7 @@ class GameState:
     alive: bool
     height: int
     width: int
+    paused: bool= False
 
 
 def new_game(height: int, width: int) -> GameState:
@@ -28,7 +29,9 @@ def new_game(height: int, width: int) -> GameState:
     )
     return replace(state, momo=spawn_food(state))
 
-
+def toggle_pause(state: GameState) -> GameState:
+    """Toggles the paused state of the game and returns a updated copy of the state."""
+    return replace(state, paused=not state.paused)
 def did_eat(state: GameState) -> bool:
     return state.snake[0] == state.momo
 

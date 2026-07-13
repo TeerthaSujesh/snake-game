@@ -49,8 +49,17 @@ def draw(stdscr, state: GameState) -> None:
     stdscr.refresh()
 
 
+# Assuming 'stdscr' is a curses window object and GameState is imported
+# from engine import GameState
+
 def draw_score(stdscr, state: GameState) -> None:
-    stdscr.addstr(0, 0, f"Score: {state.score}")
+    """Draws the current score and a pause notification if the game is paused."""
+    status = f"Score: {state.score}"
+    
+    if state.paused:
+        status += "   PAUSED (p to resume)"
+        
+    stdscr.addstr(0, 0, status)
 
 
 def draw_game_over(stdscr, state: GameState) -> None:

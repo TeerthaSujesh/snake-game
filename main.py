@@ -1,7 +1,8 @@
 import curses
 import time
 
-from engine import GameState, change_direction, move, new_game
+# Added toggle_pause to the import list
+from engine import GameState, change_direction, move, new_game, toggle_pause
 from renderer import draw, draw_game_over, init_colors
 
 KEY_DIRS = {
@@ -17,8 +18,14 @@ def compute_delay(state: GameState) -> float:
 
 
 def handle_input(state: GameState, key: int) -> GameState:
+    # 1. Check for pause key first (independent of arrow keys)
+    if key == ord("p") or key == ord("P"):
+        return toggle_pause(state)
+    
+    # 2. Check for movement keys
     if key in KEY_DIRS:
         return change_direction(state, KEY_DIRS[key])
+        
     return state
 
 
@@ -31,14 +38,22 @@ def main(stdscr):
     max_y, max_x = stdscr.getmaxyx()
     height = min(20, max_y - 3)
     width = min(40, max_x - 3)
+    
+    # Initialize state once
     state = new_game(height=height, width=width)
+
+    # Indented the main loop so it lives inside the main() function
     while state.alive:
         key = stdscr.getch()
         state = handle_input(state, key)
-        state = move(state)
+        
+        if not state.paused:
+            state = move(state)
+            
         draw(stdscr, state)
         time.sleep(compute_delay(state))
 
+    # Trigger game over behavior when loop finishes
     draw_game_over(stdscr, state)
     stdscr.nodelay(False)
     stdscr.getch()
