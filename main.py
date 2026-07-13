@@ -11,10 +11,14 @@ KEY_DIRS = {
     curses.KEY_LEFT: (0, -1),
     curses.KEY_RIGHT: (0, 1),
 }
-
+BASE_DELAY = 0.1
+SPEEDUP_PER_LEVEL = 0.01
+MIN_DELAY = 0.05
+POINTS_PER_LEVEL = 5
 
 def compute_delay(state: GameState) -> float:
-    return 0.1
+    level = state.score // POINTS_PER_LEVEL
+    return max(BASE_DELAY - level * SPEEDUP_PER_LEVEL, MIN_DELAY)
 
 
 def handle_input(state: GameState, key: int) -> GameState:
