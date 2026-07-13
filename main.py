@@ -32,12 +32,22 @@ def main(stdscr):
     height = min(20, max_y - 3)
     width = min(40, max_x - 3)
     state = new_game(height=height, width=width)
-    while state.alive:
-        key = stdscr.getch()
-        state = handle_input(state, key)
+    # Assuming standard game functions like new_game, handle_input, move, draw,
+# and compute_delay are imported or defined elsewhere.
+# from engine import GameState
+
+# Example initialization placeholder
+# state = new_game(height=height, width=width)
+
+while state.alive:
+    key = stdscr.getch()
+    state = handle_input(state, key)
+    
+    if not state.paused:
         state = move(state)
-        draw(stdscr, state)
-        time.sleep(compute_delay(state))
+        
+    draw(stdscr, state)
+    time.sleep(compute_delay(state))
 
     draw_game_over(stdscr, state)
     stdscr.nodelay(False)
