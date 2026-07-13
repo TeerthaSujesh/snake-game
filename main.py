@@ -38,7 +38,7 @@ def main(stdscr):
 
 # Example initialization placeholder
 # state = new_game(height=height, width=width)
-
+state=new_game(height=height, width =width)
 while state.alive:
     key = stdscr.getch()
     state = handle_input(state, key)
